@@ -185,7 +185,7 @@ resource "aws_autoscaling_group" "spacelift_worker" {
   health_check_grace_period = 300
 
   min_size         = var.worker_count
-  max_size         = var.worker_count * 2
+  max_size         = var.worker_count == 1 ? 2 : var.worker_count * 2  # Allow scaling to 2 even with 1 worker
   desired_capacity = var.worker_count
 
   launch_template {

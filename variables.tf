@@ -19,13 +19,13 @@ variable "worker_pool_description" {
 variable "instance_type" {
   description = "EC2 instance type for worker nodes"
   type        = string
-  default     = "t3.medium"
+  default     = "t2.micro"  # Free Tier eligible
 }
 
 variable "worker_count" {
   description = "Number of worker instances to create"
   type        = number
-  default     = 2
+  default     = 1  # Set to 1 for Free Tier
 }
 
 variable "key_pair_name" {
