@@ -1,0 +1,17 @@
+# Example configuration for IAM Policy Approval Policy
+
+# Name of the approval policy
+policy_name = "iam-policy-security-approval"
+
+# Spacelift space ID (use "root" for root space)
+space_id = "root"
+
+# Labels for the policy (autoattach:* will be added automatically)
+policy_labels = ["security", "iam", "approval", "mandatory"]
+
+# Whether to create security team context
+create_security_context = true
+
+# Security team contact information
+security_team_email = "security@yourcompany.com"
+security_team_slack = "#security-approvals"
