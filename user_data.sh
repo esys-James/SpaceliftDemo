@@ -16,10 +16,10 @@ usermod -a -G docker ec2-user
 
 # Install Terraform
 TERRAFORM_VERSION="1.5.7"
-wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
-unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+wget https://releases.hashicorp.com/terraform/$${TERRAFORM_VERSION}/terraform_$${TERRAFORM_VERSION}_linux_amd64.zip
+unzip terraform_$${TERRAFORM_VERSION}_linux_amd64.zip
 mv terraform /usr/local/bin/
-rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+rm terraform_$${TERRAFORM_VERSION}_linux_amd64.zip
 
 # Install kubectl (for Kubernetes workloads if needed)
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
