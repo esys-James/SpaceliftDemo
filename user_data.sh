@@ -67,9 +67,10 @@ RestartSec=5
 WantedBy=multi-user.target
 EOF
 
-# Enable the service (but don't start it yet - we need the tokens first)
+# Enable and start the service
 systemctl daemon-reload
 systemctl enable spacelift-worker
+systemctl start spacelift-worker
 
 # Create a script to start the worker with proper credentials
 cat > /opt/spacelift/start-worker.sh << 'EOF'
@@ -82,4 +83,4 @@ EOF
 chmod +x /opt/spacelift/start-worker.sh
 chown spacelift:spacelift /opt/spacelift/start-worker.sh
 
-echo "Spacelift worker setup complete. Service will start after tokens are configured."
+echo "Spacelift worker setup complete. Service has been started."
