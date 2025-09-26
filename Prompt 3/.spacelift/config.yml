@@ -1,0 +1,90 @@
+version: "1"
+
+# This makes this repository a Blueprint
+stack_defaults:
+  - blueprint
+
+# Blueprint configuration
+blueprint:
+  # Blueprint metadata
+  name: "AWS Developer Account Integration"
+  description: "Create a Spacelift AWS integration for your company-provided AWS developer account"
+  
+  # Form configuration - defines what users see
+  template:
+    # Required user inputs - these become form fields
+    body: |
+      # AWS Developer Account Integration
+      
+      This blueprint creates a Spacelift AWS integration for your company-provided AWS developer account.
+      
+      **What this does:**
+      - Creates a new AWS integration in Spacelift
+      - Uses your existing IAM role: `arn:aws:iam::{your-account-id}:role/Spacelift`
+      - Optionally creates a context with AWS account information
+      - Applies helpful labels for organization
+      
+      **What you need:**
+      - Your 12-digit AWS Account ID
+      - Your name (for labeling and organization)
+      
+      The IAM role is already created by your company's CloudFormation StackSet, so you just need to provide your account details.
+    
+    # Form inputs - these map to terraform variables
+    inputs:
+      - name: aws_account_id
+        type: string
+        display_name: "AWS Account ID"
+        description: "Your 12-digit AWS Account ID (e.g., 123456789012)"
+        required: true
+        validation:
+          pattern: "^[0-9]{12}$"
+          error_message: "Please enter exactly 12 digits"
+      
+      - name: developer_name
+        type: string
+        display_name: "Your Name"
+        description: "Your full name for labeling and organization"
+        required: true
+        validation:
+          min_length: 1
+          max_length: 50
+          error_message: "Name must be between 1 and 50 characters"
+      
+      # Optional advanced inputs (collapsed by default)
+      - name: custom_integration_name
+        type: string
+        display_name: "Custom Integration Name (Optional)"
+        description: "Leave empty to auto-generate based on your name and account ID"
+        required: false
+      
+      - name: aws_account_name
+        type: string
+        display_name: "AWS Account Display Name (Optional)"
+        description: "Friendly name for your AWS account"
+        required: false
+      
+      - name: create_context
+        type: boolean
+        display_name: "Create Context with Account Info"
+        description: "Create a Spacelift context containing your AWS account information"
+        default: true
+        required: false
+
+# Stack settings for when the blueprint runs
+stack_settings:
+  # Use Terraform
+  vendor_config:
+    terraform:
+      version: "1.5.0"
+  
+  # Environment variables for Spacelift provider
+  environment:
+    - name: TF_LOG
+      value: "INFO"
+  
+  # Labels for the blueprint-created stack
+  labels:
+    - "blueprint-created"
+    - "aws-integration"
+    - "self-service"

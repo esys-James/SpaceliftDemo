@@ -18,10 +18,6 @@ provider "aws" {
 
 # Configure the Spacelift Provider
 provider "spacelift" {
-  # API key and endpoint should be configured via environment variables:
-  # SPACELIFT_API_KEY_ENDPOINT
-  # SPACELIFT_API_KEY_ID
-  # SPACELIFT_API_KEY_SECRET
 }
 
 # Data source to get the default VPC
