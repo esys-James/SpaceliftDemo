@@ -7,27 +7,19 @@ terraform {
   }
 }
 
-# Configure the Spacelift Provider
 provider "spacelift" {
-  # API key and endpoint should be configured via environment variables:
-  # SPACELIFT_API_KEY_ENDPOINT
-  # SPACELIFT_API_KEY_ID  
-  # SPACELIFT_API_KEY_SECRET
 }
 
-# Read the Rego policy file
 locals {
   rego_policy = file("${path.module}/iam_policy_approval.rego")
 }
 
-# Create the IAM Policy Approval Policy with autoattach label
 resource "spacelift_policy" "iam_policy_approval" {
   name     = var.policy_name
   body     = local.rego_policy
   type     = "APPROVAL"
   space_id = var.space_id
 
-  # Use autoattach:* to automatically attach to all stacks
   labels = concat(var.policy_labels, ["autoattach:*"])
 }
 
