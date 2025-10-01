@@ -42,19 +42,19 @@ output "launch_template_id" {
   value       = module.spacelift_workerpool.launch_template_id
 }
 
-output "launch_template_arn" {
-  description = "ARN of the launch template"
-  value       = module.spacelift_workerpool.launch_template_arn
-}
-
-output "iam_role_arn" {
+output "instances_role_arn" {
   description = "ARN of the IAM role for worker instances"
-  value       = module.spacelift_workerpool.iam_role_arn
+  value       = module.spacelift_workerpool.instances_role_arn
 }
 
-output "iam_instance_profile_arn" {
-  description = "ARN of the IAM instance profile"
-  value       = module.spacelift_workerpool.iam_instance_profile_arn
+output "instances_role_name" {
+  description = "Name of the IAM role for worker instances"
+  value       = module.spacelift_workerpool.instances_role_name
+}
+
+output "secretsmanager_secret_arn" {
+  description = "ARN of the Secrets Manager secret holding environment variables"
+  value       = module.spacelift_workerpool.secretsmanager_secret_arn
 }
 
 output "worker_instances_info" {
