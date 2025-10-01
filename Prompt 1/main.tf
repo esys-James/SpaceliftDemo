@@ -74,7 +74,7 @@ resource "aws_security_group" "spacelift_worker" {
 module "spacelift_workerpool" {
   source = "github.com/spacelift-io/terraform-aws-spacelift-workerpool-on-ec2?ref=v5.3.1"
 
-  # Required arguments based on the GitHub README
+  # Required arguments based on the actual module variables
   worker_pool_id  = spacelift_worker_pool.main.id
   vpc_subnets     = data.aws_subnets.default.ids
   security_groups = [aws_security_group.spacelift_worker.id]
@@ -85,14 +85,12 @@ module "spacelift_workerpool" {
     SPACELIFT_POOL_PRIVATE_KEY = spacelift_worker_pool.main.private_key
   }
 
-  # Auto Scaling configuration
-  min_size         = var.worker_count
-  max_size         = var.worker_count == 1 ? 2 : var.worker_count * 2
-  desired_capacity = var.worker_count
+  # Auto Scaling configuration (only min_size and max_size are available)
+  min_size = var.worker_count
+  max_size = var.worker_count == 1 ? 2 : var.worker_count * 2
 
   # EC2 configuration
   ec2_instance_type = var.instance_type
-  key_name         = var.key_pair_name
 
   # Additional configuration (non-sensitive)
   configuration = <<EOF
@@ -100,8 +98,8 @@ export SPACELIFT_SENSITIVE_OUTPUT_UPLOAD_ENABLED=true
 # Add any other non-sensitive configuration here
 EOF
 
-  # Resource tags
-  tags = {
+  # Resource tags using additional_tags (not tags)
+  additional_tags = {
     Project     = var.project_name
     Environment = "development"
     ManagedBy   = "terraform"
